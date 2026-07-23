@@ -18,20 +18,30 @@ export function Hero() {
   const cupY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
   const cupOpacity = useTransform(scrollYProgress, [0.85, 1], [1, 0]);
 
-  // Ice cube 1 animations (Top Left)
-  const ice1Y = useTransform(scrollYProgress, [0, 1], ["-10%", "130%"]);
-  const ice1X = useTransform(scrollYProgress, [0, 1], ["-5%", "-35%"]);
-  const ice1Rotate = useTransform(scrollYProgress, [0, 1], [0, 180]);
+  // Ice cube 1 animations (Top Left - Mid Foreground)
+  const ice1Y = useTransform(scrollYProgress, [0, 1], ["-5%", "110%"]);
+  const ice1X = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
+  const ice1Rotate = useTransform(scrollYProgress, [0, 1], [0, 160]);
 
-  // Ice cube 2 animations (Top Right)
-  const ice2Y = useTransform(scrollYProgress, [0, 1], ["-5%", "150%"]);
-  const ice2X = useTransform(scrollYProgress, [0, 1], ["5%", "45%"]);
-  const ice2Rotate = useTransform(scrollYProgress, [0, 1], [45, -120]);
+  // Ice cube 2 animations (Top Right - Background Depth, moves slower)
+  const ice2Y = useTransform(scrollYProgress, [0, 1], ["-5%", "80%"]);
+  const ice2X = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const ice2Rotate = useTransform(scrollYProgress, [0, 1], [30, -100]);
 
-  // Ice cube 3 animations (Bottom Left)
-  const ice3Y = useTransform(scrollYProgress, [0, 1], ["15%", "-80%"]);
-  const ice3X = useTransform(scrollYProgress, [0, 1], ["-10%", "-50%"]);
-  const ice3Rotate = useTransform(scrollYProgress, [0, 1], [-30, 200]);
+  // Ice cube 3 animations (Bottom Left - Macro Camera Depth)
+  const ice3Y = useTransform(scrollYProgress, [0, 1], ["5%", "-100%"]);
+  const ice3X = useTransform(scrollYProgress, [0, 1], ["0%", "-22%"]);
+  const ice3Rotate = useTransform(scrollYProgress, [0, 1], [-20, 180]);
+
+  // Ice cube 4 animations (Mid-Left Background - Blurred depth)
+  const ice4Y = useTransform(scrollYProgress, [0, 1], ["0%", "95%"]);
+  const ice4X = useTransform(scrollYProgress, [0, 1], ["0%", "-16%"]);
+  const ice4Rotate = useTransform(scrollYProgress, [0, 1], [-15, 140]);
+
+  // Ice cube 5 animations (Bottom Right Foreground - Clear & crisp)
+  const ice5Y = useTransform(scrollYProgress, [0, 1], ["10%", "-90%"]);
+  const ice5X = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const ice5Rotate = useTransform(scrollYProgress, [0, 1], [10, -150]);
 
   // Big background text ("FUEL YOUR MORNING"): Stays fully visible initially, then fades out smoothly between 150px and 550px
   const bgTextY = useTransform(scrollY, [0, 150, 550], ["0px", "0px", "-40px"]);
@@ -90,12 +100,12 @@ export function Hero() {
         </motion.div>
 
         {/* Floating Elements Container */}
-        <div className="relative w-full max-w-xs sm:max-w-2xl md:max-w-4xl aspect-square flex items-center justify-center z-10 pointer-events-none">
+        <div className="relative w-full max-w-sm sm:max-w-2xl md:max-w-4xl aspect-square flex items-center justify-center z-10 pointer-events-none">
           
           {/* Main Coffee Cup */}
           <motion.div 
             style={{ scale: cupScale, y: cupY, opacity: cupOpacity }}
-            className="relative w-48 sm:w-64 md:w-96 aspect-[3/4] z-20 mix-blend-multiply flex items-center justify-center"
+            className="relative w-56 sm:w-76 md:w-[420px] aspect-[3/4] z-20 mix-blend-multiply flex items-center justify-center"
           >
             <img 
               src={coffeeImg} 
@@ -104,26 +114,50 @@ export function Hero() {
             />
           </motion.div>
 
-          {/* Ice Cubes */}
+          {/* Ice Cubes - Scaled strictly in 6:5:5:3:3 ratios relative to each other */}
+          
+          {/* Ice 1: Sol üst (Top Left) - Size Ratio 5 */}
           <motion.div 
             style={{ y: ice1Y, x: ice1X, rotate: ice1Rotate }}
-            className="absolute top-1/4 left-1/12 sm:left-1/4 w-16 sm:w-24 md:w-32 aspect-square z-30 mix-blend-multiply opacity-85"
+            className="absolute top-[19%] left-[16%] sm:left-[22%] md:left-[24%] w-[60px] sm:w-[90px] md:w-[150px] aspect-square z-30 mix-blend-multiply opacity-90 pointer-events-none"
           >
-            <img src={iceCubeImg} alt="" className="w-full h-full object-contain" />
+            <img src={iceCubeImg} alt="" className="w-full h-full object-contain filter drop-shadow-md" />
           </motion.div>
 
+          {/* Ice 2: Top Right - Size Ratio 3 (25% More Visible Blurred Background) */}
           <motion.div 
             style={{ y: ice2Y, x: ice2X, rotate: ice2Rotate }}
-            className="absolute top-1/3 right-1/12 sm:right-1/4 w-12 sm:w-20 md:w-28 aspect-square z-10 mix-blend-multiply opacity-75"
+            className="absolute top-[24%] right-[18%] sm:right-[24%] md:right-[26%] w-[36px] sm:w-[54px] md:w-[90px] aspect-square z-10 mix-blend-multiply opacity-80 pointer-events-none"
           >
-            <img src={iceCubeImg} alt="" className="w-full h-full object-contain blur-[1px] md:blur-[2px]" />
+            <img src={iceCubeImg} alt="" className="w-full h-full object-contain filter blur-[1px] md:blur-[1.5px]" />
           </motion.div>
 
+          {/* Ice 3: Sol alt (Bottom Left) - Size Ratio 6 (Largest Macro Foreground) */}
           <motion.div 
             style={{ y: ice3Y, x: ice3X, rotate: ice3Rotate }}
-            className="absolute bottom-1/4 left-1/6 sm:left-1/3 w-18 sm:w-28 md:w-40 aspect-square z-30 mix-blend-multiply opacity-90"
+            className="absolute bottom-[17%] left-[17%] sm:left-[22%] md:left-[23%] w-[72px] sm:w-[108px] md:w-[180px] aspect-square z-40 pointer-events-none"
           >
-            <img src={iceCubeImg} alt="" className="w-full h-full object-contain blur-[0.5px] md:blur-[1px]" />
+            <img 
+              src={iceCubeImg} 
+              alt="" 
+              className="w-full h-full object-contain mix-blend-multiply opacity-95 filter drop-shadow-[0_16px_24px_rgba(0,0,0,0.22)]" 
+            />
+          </motion.div>
+
+          {/* Ice 4: Mid-Left - Size Ratio 3 (25% More Visible Blurred Background) */}
+          <motion.div 
+            style={{ y: ice4Y, x: ice4X, rotate: ice4Rotate }}
+            className="absolute top-[42%] left-[13%] sm:left-[19%] md:left-[21%] w-[36px] sm:w-[54px] md:w-[90px] aspect-square z-10 mix-blend-multiply opacity-75 pointer-events-none"
+          >
+            <img src={iceCubeImg} alt="" className="w-full h-full object-contain filter blur-[1px] md:blur-[1.5px]" />
+          </motion.div>
+
+          {/* Ice 5: Sağ alt (Bottom Right) - Size Ratio 5 */}
+          <motion.div 
+            style={{ y: ice5Y, x: ice5X, rotate: ice5Rotate }}
+            className="absolute bottom-[21%] right-[14%] sm:right-[19%] md:right-[21%] w-[60px] sm:w-[90px] md:w-[150px] aspect-square z-30 mix-blend-multiply opacity-90 pointer-events-none"
+          >
+            <img src={iceCubeImg} alt="" className="w-full h-full object-contain filter drop-shadow-md" />
           </motion.div>
 
         </div>
