@@ -1,0 +1,133 @@
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { ChevronDown } from "lucide-react";
+import coffeeImg from "../assets/images/yeni-bardak,png.png";
+import iceCubeImg from "../assets/images/yeni-ice.png";
+
+export function Hero() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollY } = useScroll();
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  // Coffee cup animations
+  const cupScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.15, 1.35]);
+  const cupY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const cupOpacity = useTransform(scrollYProgress, [0.85, 1], [1, 0]);
+
+  // Ice cube 1 animations (Top Left)
+  const ice1Y = useTransform(scrollYProgress, [0, 1], ["-10%", "130%"]);
+  const ice1X = useTransform(scrollYProgress, [0, 1], ["-5%", "-35%"]);
+  const ice1Rotate = useTransform(scrollYProgress, [0, 1], [0, 180]);
+
+  // Ice cube 2 animations (Top Right)
+  const ice2Y = useTransform(scrollYProgress, [0, 1], ["-5%", "150%"]);
+  const ice2X = useTransform(scrollYProgress, [0, 1], ["5%", "45%"]);
+  const ice2Rotate = useTransform(scrollYProgress, [0, 1], [45, -120]);
+
+  // Ice cube 3 animations (Bottom Left)
+  const ice3Y = useTransform(scrollYProgress, [0, 1], ["15%", "-80%"]);
+  const ice3X = useTransform(scrollYProgress, [0, 1], ["-10%", "-50%"]);
+  const ice3Rotate = useTransform(scrollYProgress, [0, 1], [-30, 200]);
+
+  // Big background text ("FUEL YOUR MORNING"): Stays fully visible initially, then fades out smoothly between 150px and 550px
+  const bgTextY = useTransform(scrollY, [0, 150, 550], ["0px", "0px", "-40px"]);
+  const bgTextOpacity = useTransform(scrollY, [0, 150, 550], [1, 1, 0]);
+
+  // Subtitle text ("Designed for the early risers..."): Stays fully visible for initial scroll (0-100px), then fades out smoothly across 100px to 450px
+  const subtitleY = useTransform(scrollY, [0, 100, 450], ["0px", "0px", "-25px"]);
+  const subtitleOpacity = useTransform(scrollY, [0, 100, 450], [1, 1, 0]);
+
+  // "Scroll to explore" hint: Disappears INSTANTLY on first scroll movement (0-15px)
+  const scrollHintOpacity = useTransform(scrollY, [0, 15], [1, 0]);
+  const scrollHintY = useTransform(scrollY, [0, 15], [0, 10]);
+
+  return (
+    <div ref={containerRef} className="relative h-[250vh] sm:h-[300vh] bg-[#FBFBFB]">
+      <div className="sticky top-0 h-[100dvh] h-screen w-full overflow-hidden flex items-center justify-center px-4 sm:px-6">
+        
+        {/* Background Typography */}
+        <motion.div 
+          style={{ y: bgTextY, opacity: bgTextOpacity }}
+          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-0 select-none px-4"
+        >
+          <h1 className="text-[16vw] sm:text-[15vw] leading-[0.9] font-extrabold tracking-tighter text-black opacity-[0.06] sm:opacity-[0.04] uppercase text-center">
+            Fuel Your
+          </h1>
+          <h1 className="text-[16vw] sm:text-[15vw] leading-[0.9] font-extrabold tracking-tighter text-black opacity-[0.06] sm:opacity-[0.04] uppercase text-center">
+            Morning.
+          </h1>
+        </motion.div>
+
+        {/* Subtitle / Tagline */}
+        <motion.div 
+          style={{ y: subtitleY, opacity: subtitleOpacity }}
+          className="absolute bottom-14 sm:bottom-16 left-4 right-4 md:left-12 md:right-auto max-w-xs sm:max-w-sm mx-auto md:mx-0 text-center md:text-left pointer-events-none z-10"
+        >
+          <p className="text-[13px] sm:text-[14px] leading-relaxed text-[#3A3A3C] font-normal">
+            Designed for the <span className="text-black font-semibold">early risers</span> and the <span className="text-black font-semibold">high performers</span>. The ultimate cold brew experience.
+          </p>
+        </motion.div>
+
+        {/* Scroll Indicator - Disappears INSTANTLY on first scroll; Arrow on a new line below text */}
+        <motion.div 
+          style={{ opacity: scrollHintOpacity, y: scrollHintY }}
+          className="absolute bottom-3 left-0 right-0 text-center pointer-events-none z-10 flex flex-col items-center justify-center"
+        >
+          <motion.div 
+            animate={{ opacity: [0.4, 0.9, 0.4] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+            className="flex flex-col items-center justify-center gap-1 text-black/50 text-[10px] sm:text-[11px] font-semibold tracking-widest uppercase"
+          >
+            <span>Scroll to explore</span>
+            <motion.div animate={{ y: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
+              <ChevronDown className="w-4 h-4" />
+            </motion.div>
+          </motion.div>
+        </motion.div>
+
+        {/* Floating Elements Container */}
+        <div className="relative w-full max-w-xs sm:max-w-2xl md:max-w-4xl aspect-square flex items-center justify-center z-10 pointer-events-none">
+          
+          {/* Main Coffee Cup */}
+          <motion.div 
+            style={{ scale: cupScale, y: cupY, opacity: cupOpacity }}
+            className="relative w-48 sm:w-64 md:w-96 aspect-[3/4] z-20 mix-blend-multiply flex items-center justify-center"
+          >
+            <img 
+              src={coffeeImg} 
+              alt="Café Ö Co. Iced Coffee" 
+              className="w-full h-full object-contain drop-shadow-2xl"
+            />
+          </motion.div>
+
+          {/* Ice Cubes */}
+          <motion.div 
+            style={{ y: ice1Y, x: ice1X, rotate: ice1Rotate }}
+            className="absolute top-1/4 left-1/12 sm:left-1/4 w-16 sm:w-24 md:w-32 aspect-square z-30 mix-blend-multiply opacity-85"
+          >
+            <img src={iceCubeImg} alt="" className="w-full h-full object-contain" />
+          </motion.div>
+
+          <motion.div 
+            style={{ y: ice2Y, x: ice2X, rotate: ice2Rotate }}
+            className="absolute top-1/3 right-1/12 sm:right-1/4 w-12 sm:w-20 md:w-28 aspect-square z-10 mix-blend-multiply opacity-75"
+          >
+            <img src={iceCubeImg} alt="" className="w-full h-full object-contain blur-[1px] md:blur-[2px]" />
+          </motion.div>
+
+          <motion.div 
+            style={{ y: ice3Y, x: ice3X, rotate: ice3Rotate }}
+            className="absolute bottom-1/4 left-1/6 sm:left-1/3 w-18 sm:w-28 md:w-40 aspect-square z-30 mix-blend-multiply opacity-90"
+          >
+            <img src={iceCubeImg} alt="" className="w-full h-full object-contain blur-[0.5px] md:blur-[1px]" />
+          </motion.div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
