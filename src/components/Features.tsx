@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import runningImg from "../assets/images/running_track_dawn_1784775635928.jpg";
+import iceCubeImg from "../assets/images/yeni-ice.png";
 
 export function Features() {
   return (
@@ -33,12 +34,29 @@ export function Features() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ delay: 0.3 + (index * 0.2), duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex items-center space-x-4 border-b border-black/5 pb-6"
+                    className="group relative flex items-center space-x-6 border-b border-black/5 pb-6 cursor-pointer select-none"
                   >
-                    <div className="w-8 h-8 flex items-center justify-center border border-black/10 rounded-full text-[12px] font-bold tracking-widest uppercase">
-                      {item.num}
+                    {/* Ice Cube with number directly underneath */}
+                    <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center flex-shrink-0">
+                      {/* Number badge (underneath ice cube) */}
+                      <span className="text-[13px] sm:text-[14px] font-extrabold tracking-wider text-black/80 z-0 transition-all duration-300 group-hover:scale-110">
+                        {item.num}
+                      </span>
+                      
+                      {/* Larger Ice Cube (Layered on top of number) */}
+                      <img 
+                        src={iceCubeImg} 
+                        alt="Ice cube overlay" 
+                        className="absolute inset-0 w-full h-full object-contain mix-blend-multiply opacity-85 pointer-events-none z-10 transition-transform duration-500 ease-out group-hover:scale-125 group-hover:rotate-12 group-hover:opacity-100 filter drop-shadow-md" 
+                      />
                     </div>
-                    <div className="text-[14px] font-semibold tracking-tight text-[#1D1D1F]">{item.text}</div>
+
+                    {/* Text that grows/scales under the ice cube on hover */}
+                    <div className="relative overflow-visible">
+                      <div className="text-[15px] sm:text-[16px] font-semibold tracking-tight text-[#1D1D1F] transition-all duration-300 origin-left group-hover:scale-110 group-hover:translate-x-2 group-hover:text-black">
+                        {item.text}
+                      </div>
+                    </div>
                   </motion.div>
                 ))}
               </div>
@@ -51,16 +69,17 @@ export function Features() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full aspect-square lg:aspect-[4/5] bg-neutral-900 rounded-[40px] shadow-sm overflow-hidden flex items-center justify-center"
+              className="relative w-full aspect-square lg:aspect-[4/5] rounded-[40px] shadow-sm overflow-hidden flex items-start justify-center border border-black/5"
             >
               <img 
                 src={runningImg} 
                 alt="Running Track at Dawn" 
-                className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay"
+                className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="text-center p-12 relative z-10">
-                <h3 className="text-3xl font-light tracking-tight mb-4 text-white">"The pre-workout you actually look forward to drinking."</h3>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-white/70">Health & Fitness Mag</p>
+              <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent" />
+              <div className="text-center p-8 sm:p-12 pt-10 sm:pt-14 relative z-10">
+                <h3 className="text-2xl sm:text-3xl font-light tracking-tight mb-4 text-white drop-shadow-md">"The pre-workout you actually look forward to drinking."</h3>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-white/80">Health & Fitness Mag</p>
               </div>
             </motion.div>
           </div>
