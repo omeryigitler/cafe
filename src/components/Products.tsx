@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
-import blackColdBrewImg from "../assets/images/black_cold_brew_1784775609272.jpg";
-import oatMilkLatteImg from "../assets/images/oat_milk_latte_1784775623021.jpg";
-import vanillaBeanLatteImg from "../assets/images/vanilla_bean_latte_1784775653420.jpg";
+import prod1Img from "../assets/images/ChatGPT Image Jul 23, 2026, 08_17_44 AM (1) (1).png";
+import prod2Img from "../assets/images/ChatGPT Image Jul 23, 2026, 08_17_44 AM (2) (1).png";
+import prod3Img from "../assets/images/ChatGPT Image Jul 23, 2026, 08_17_44 AM (3) (1).png";
 
 export function Products() {
   return (
@@ -23,9 +23,9 @@ export function Products() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { name: "Original Black", desc: "Pure, intense, smooth.", price: "$36 / 6-pack", image: blackColdBrewImg },
-            { name: "Oat Milk Draft", desc: "Creamy, dairy-free.", price: "$42 / 6-pack", image: oatMilkLatteImg },
-            { name: "Vanilla Bean", desc: "A touch of real vanilla.", price: "$42 / 6-pack", image: vanillaBeanLatteImg },
+            { name: "Original Black", desc: "Pure, intense, smooth.", price: "€36 / 6-pack", image: prod1Img },
+            { name: "Oat Milk Draft", desc: "Creamy, dairy-free.", price: "€42 / 6-pack", image: prod2Img },
+            { name: "Vanilla Bean", desc: "A touch of real vanilla.", price: "€42 / 6-pack", image: prod3Img },
           ].map((product, i) => (
             <motion.div
               key={product.name}
@@ -35,11 +35,11 @@ export function Products() {
               transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="bg-[#FBFBFB] border border-black/5 rounded-[32px] p-6 md:p-8 flex flex-col items-center hover:shadow-xl hover:-translate-y-2 transition-all duration-500 group cursor-pointer"
             >
-              <div className="w-full h-56 md:h-64 mb-6 relative mix-blend-multiply flex items-center justify-center p-4">
+              <div className="w-full h-56 md:h-64 mb-6 relative flex items-center justify-center p-2">
                 <img 
                   src={product.image} 
                   alt={product.name} 
-                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 ease-out" 
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 ease-out mix-blend-multiply" 
                 />
               </div>
               <h3 className="text-xl font-semibold tracking-tight text-[#1D1D1F] mb-2">{product.name}</h3>
